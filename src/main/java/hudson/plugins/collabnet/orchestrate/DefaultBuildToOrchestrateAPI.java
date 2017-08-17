@@ -16,7 +16,7 @@
 
 package hudson.plugins.collabnet.orchestrate;
 
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
@@ -42,11 +42,16 @@ public class DefaultBuildToOrchestrateAPI implements BuildToOrchestrateAPI {
     }
 
     /** {@inheritDoc} */
-    public String toOrchestrateAPI(AbstractBuild build, String sourceKey) throws IOException {
+    public String toOrchestrateAPI(Run build, String sourceKey) throws IOException {
+        return toOrchestrateAPI(build, sourceKey, null);
+    }
+
+    /** {@inheritDoc} */
+    public String toOrchestrateAPI(Run build, String sourceKey, String status) throws IOException {
         JSONObject response = new JSONObject()
                 .element("api_version", "1")
                 .element("source_association_key", sourceKey)
-                .element("build_data", converter.getBuildData(build));
+                .element("build_data", converter.getBuildData(build, status));
 
         return response.toString();
     }

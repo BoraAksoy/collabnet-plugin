@@ -16,7 +16,7 @@
 
 package hudson.plugins.collabnet.orchestrate;
 
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 
 import java.io.IOException;
 
@@ -32,6 +32,16 @@ public interface BuildToOrchestrateAPI {
      * @return the JSON formatted data
      * @throws IOException if an error occurs converting the build to a JSON object
      */
-    public String toOrchestrateAPI(AbstractBuild build, String sourceKey) throws IOException;
+    public String toOrchestrateAPI(Run build, String sourceKey) throws IOException;
 
+    /**
+     * Converts the given build to the format used by the EventQ API.
+     *
+     * @param build Run.
+     * @param sourceKey the key to use to identify this server to the EventQ API.
+     * @param status EventQ status to report.
+     * @return the JSON formatted data
+     * @throws IOException if an error occurs converting the build to a JSON object
+     */
+    public String toOrchestrateAPI(Run build, String sourceKey, String status) throws IOException;
 }
